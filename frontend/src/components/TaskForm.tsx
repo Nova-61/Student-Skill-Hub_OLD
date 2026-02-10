@@ -55,12 +55,18 @@ export default function TaskForm({ taskId, onSuccess, onCancel }: TaskFormProps)
     setError("")
 
     try {
+      // Use FormData because backend parsers expect form/multipart data
+      const fd = new FormData()
+      Object.entries(formData).forEach(([k, v]) => {
+        if (v !== null && v !== undefined) fd.append(k, String(v))
+      })
+
       if (taskId) {
         // Update existing task
-        await api.put(`tasks/${taskId}/`, formData)
+        await api.put(`tasks/${taskId}/`, fd, { headers: { "Content-Type": "multipart/form-data" } })
       } else {
         // Create new task
-        await api.post("tasks/", formData)
+        await api.post("tasks/", fd, { headers: { "Content-Type": "multipart/form-data" } })
       }
       onSuccess?.()
     } catch (err: any) {

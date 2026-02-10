@@ -1,6 +1,7 @@
 from pathlib import Path
 from datetime import timedelta
 import os
+import secrets
 from dotenv import load_dotenv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -8,8 +9,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / ".env")
 
 # SECURITY
-SECRET_KEY = os.getenv("SECRET_KEY")
-DEBUG = os.getenv("DEBUG", "0") == "1"
+# If SECRET_KEY is not provided via environment, generate a temporary one for
+# local development and tests. Do not use the generated key in production.
+SECRET_KEY = os.getenv("SECRET_KEY") or secrets.token_urlsafe(50)
+DEBUG = os.getenv("DEBUG", "0").lower() in ("1", "true", "yes")
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1,*").split(",")
 
@@ -51,11 +54,6 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://localhost:5173",  # Vite порт
-]
-
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "config.urls"
@@ -79,6 +77,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
+
+# Channels (use in-memory channel layer for local development/tests)
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+    },
+}
 
 # DATABASE
 if os.getenv("USE_SQLITE", "0") == "1":
@@ -130,7 +135,11 @@ SIMPLE_JWT = {
 }
 
 # CORS
-CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:3000,http://localhost").split(",")
+# Default allowed origins include common local dev ports (Vite/CRA)
+CORS_ALLOWED_ORIGINS = os.getenv(
+    "CORS_ALLOWED_ORIGINS",
+    "http://localhost:3000,http://localhost:5173,http://localhost",
+).split(",")
 
 # STATIC
 STATIC_URL = "/static/"

@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python \"C:\\\\Users\\\\Snake\\\\PycharmProjects\\\\Проекты_для_гитхаба\\\\Student-Skill-Hub Django\\+React\\\\backend\\\\manage\\.py\" check$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

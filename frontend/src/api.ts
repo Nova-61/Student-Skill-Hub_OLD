@@ -28,9 +28,11 @@ api.interceptors.response.use(
       originalRequest._retry = true
       const refresh = localStorage.getItem("refresh")
       if (refresh) {
-        try {
+          try {
           // call refresh without triggering this interceptor (use axios directly)
-          const resp = await axios.post("/api/users/refresh/", { refresh }, { headers: { "Content-Type": "application/json" } })
+          // use the same baseURL as the api instance to avoid relative-path issues
+          const refreshUrl = (api.defaults.baseURL || "") + "users/refresh/"
+          const resp = await axios.post(refreshUrl, { refresh }, { headers: { "Content-Type": "application/json" } })
           const newAccess = resp.data.access
           if (newAccess) {
             localStorage.setItem("access", newAccess)
